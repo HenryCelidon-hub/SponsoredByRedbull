@@ -114,6 +114,32 @@ public abstract class Character {
         System.out.println("You earned 2 attribute points!");
         System.out.println("Current attribute points: " + attributePoints);
     }
+
+
+    // Method to take damage and update health
+    public void takeDamage(int damage) {
+        if (damage <= 0) {
+            return;
+        }
+        health -= damage;
+
+        if (health < 0) {
+            health = 0;
+        }
+    }
+
+
+    // Method to heal and update health
+    public void heal(int amount) {
+        if (amount <= 0) {
+            return;
+        }
+        health += amount;
+
+        if (health > maxHealth) {
+            health = maxHealth;
+        }
+    }
 }
 
 
