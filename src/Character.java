@@ -1,0 +1,69 @@
+
+public abstract class Character {
+
+    // Character information
+    private String name;
+    private int level;
+    private int experience;
+
+    // Health
+    private int health;
+    private int maxHealth;
+
+    // Combat attributes
+    private int strength;
+    private int agility;
+
+    // Available points for customization
+    private int attributePoints;
+    
+    // Constructor
+    public Character(String name, int startingHealth,
+                     int strength, int agility) {
+
+        this.name = name;
+        this.level = 1;
+        this.experience = 0;
+
+        this.maxHealth = startingHealth;
+        this.health = startingHealth;
+
+        this.strength = strength;
+        this.agility = agility;
+
+        this.attributePoints = 0;
+    }
+
+    // Getters
+    public String getName() {
+        return name;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
+    public int getAgility() {
+        return agility;
+    }
+
+    public int getAttributePoints() {
+        return attributePoints;
+    }
+}
