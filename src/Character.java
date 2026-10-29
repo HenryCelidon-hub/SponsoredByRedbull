@@ -66,4 +66,30 @@ public abstract class Character {
     public int getAttributePoints() {
         return attributePoints;
     }
+
+    // Method to allocate attribute points to strength
+    public boolean allocateStrength(int points) {
+        if (points <= 0 || points > attributePoints) {
+        return false;
+        }
+
+        strength += points;
+        attributePoints -= points;
+
+        return true;
+    }
+
+    // Method to allocate attribute points to agility
+    public boolean allocateAgility(int points) {
+        if (points <= 0 || points > attributePoints) {
+        return false;
+        }
+
+        agility += points;
+        attributePoints -= points;
+
+        return true;
+    }
 }
+
+
