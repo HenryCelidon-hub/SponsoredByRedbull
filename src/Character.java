@@ -90,6 +90,31 @@ public abstract class Character {
 
         return true;
     }
+
+        // method to keep track of experince and implment leveing up.
+        public void gainExperience(int xp) {
+        if (xp <= 0) {
+            return;
+        }
+
+        experience += xp;
+
+        while (experience >= level * 100) {
+            experience -= level * 100;
+            levelUp();
+        }
+    }
+
+    // methond to level up, updating required variables.
+    private void levelUp() {
+        level++;
+        attributePoints += 2;
+
+        System.out.println(name + " reached level " + level + "!");
+        System.out.println("You earned 2 attribute points!");
+        System.out.println("Current attribute points: " + attributePoints);
+    }
 }
+
 
 
