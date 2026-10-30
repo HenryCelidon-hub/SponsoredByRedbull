@@ -66,4 +66,87 @@ public abstract class Character {
     public int getAttributePoints() {
         return attributePoints;
     }
+
+    // Method to allocate attribute points to strength
+    public boolean allocateStrength(int points) {
+        if (points <= 0 || points > attributePoints) {
+        return false;
+        }
+
+        strength += points;
+        attributePoints -= points;
+
+        return true;
+    }
+
+    // Method to allocate attribute points to agility
+    public boolean allocateAgility(int points) {
+        if (points <= 0 || points > attributePoints) {
+        return false;
+        }
+
+        agility += points;
+        attributePoints -= points;
+
+        return true;
+    }
+
+        // method to keep track of experince and implment leveing up.
+        public void gainExperience(int xp) {
+        if (xp <= 0) {
+            return;
+        }
+
+        experience += xp;
+
+        while (experience >= level * 100) {
+            experience -= level * 100;
+            levelUp();
+        }
+    }
+
+    // methond to level up, updating required variables.
+    private void levelUp() {
+        level++;
+        attributePoints += 2;
+        
+        int healthIncrease = getHealthIncrease();
+        maxHealth += healthIncrease;
+        health = maxHealth;
+
+        System.out.println(name + " reached level " + level + "!");
+        System.out.println("You earned 2 attribute points!");
+        System.out.println("Current attribute points: " + attributePoints);
+    }
+
+
+    // Method to take damage and update health
+    public void takeDamage(int damage) {
+        if (damage <= 0) {
+            return;
+        }
+        health -= damage;
+
+        if (health < 0) {
+            health = 0;
+        }
+    }
+
+
+    // Method to heal and update health
+    public void heal(int amount) {
+        if (amount <= 0) {
+            return;
+        }
+        health += amount;
+
+        if (health > maxHealth) {
+            health = maxHealth;
+        }
+    }
+
+    protected abstract int getHealthIncrease();
 }
+
+
+
