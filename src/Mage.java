@@ -46,4 +46,10 @@ public class Mage extends Character {
         maxMana += 15;
         mana += 15; // Restore mana to full on level up
     }
+
+    @Override
+    public void displayStats() {
+        super.displayStats();
+        System.out.println("Mana: " + mana + "/" + maxMana);
+    }
 }

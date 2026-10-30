@@ -153,6 +153,19 @@ public abstract class Character {
     }
 
     protected abstract int getHealthIncrease();
+
+    // Method to display character stats
+    public void displayStats() {
+        System.out.println("\n===== CHARACTER STATS =====");
+        System.out.println("Name: " + name);
+        System.out.println("Class: " + getClass().getSimpleName());
+        System.out.println("Level: " + level);
+        System.out.println("Experience: " + experience + "/" + (level * 100));
+        System.out.println("Health: " + health + "/" + maxHealth);
+        System.out.println("Strength: " + strength);
+        System.out.println("Agility: " + agility);
+        System.out.println("Attribute Points: " + attributePoints);
+    }
 }
 
 
