@@ -59,9 +59,14 @@ public class Main {
                 throw new IllegalStateException("Invalid class");
         }
 
+        scanner.nextLine();
+
         System.out.println("\nCharacter created successfully!");
 
         player.displayStats();
+
+        Game game = new Game(player, scanner);
+        game.start();
 
         scanner.close();
     }
