@@ -109,6 +109,10 @@ public abstract class Character {
     private void levelUp() {
         level++;
         attributePoints += 2;
+        
+        int healthIncrease = getHealthIncrease();
+        maxHealth += healthIncrease;
+        health = maxHealth;
 
         System.out.println(name + " reached level " + level + "!");
         System.out.println("You earned 2 attribute points!");
@@ -140,6 +144,8 @@ public abstract class Character {
             health = maxHealth;
         }
     }
+
+    protected abstract int getHealthIncrease();
 }
 
 

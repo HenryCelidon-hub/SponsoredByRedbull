@@ -4,18 +4,16 @@ public class Main {
 
         Warrior player = new Warrior("Hero");
 
-        System.out.println("Name: " + player.getName());
+        System.out.println("Before leveling:");
+        System.out.println("Health: " + player.getHealth());
+        System.out.println("Max Health: " + player.getMaxHealth());
+
+        player.gainExperience(100);
+
+        System.out.println("\nAfter leveling:");
         System.out.println("Level: " + player.getLevel());
         System.out.println("Health: " + player.getHealth());
-        System.out.println("Strength: " + player.getStrength());
-        System.out.println("Agility: " + player.getAgility());
-
-        player.gainExperience(150);
-
-        System.out.println("\nAfter gaining XP:");
-        System.out.println("Level: " + player.getLevel());
-        System.out.println("Remaining XP: " + player.getExperience());
-        System.out.println("Available points: " + player.getAttributePoints());
-
+        System.out.println("Max Health: " + player.getMaxHealth());
+        System.out.println("Attribute Points: " + player.getAttributePoints());
     }
 }

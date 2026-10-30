@@ -4,4 +4,8 @@ public class Warrior extends Character {
         super(name, 150, 15, 7);
     }
 
+    @Override 
+    protected int getHealthIncrease() {
+        return 20;
+    }
 }
