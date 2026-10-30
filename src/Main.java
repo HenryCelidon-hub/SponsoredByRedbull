@@ -1,19 +1,73 @@
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
 
-        Warrior player = new Warrior("Hero");
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Before leveling:");
-        System.out.println("Health: " + player.getHealth());
-        System.out.println("Max Health: " + player.getMaxHealth());
+        System.out.println("===========================");
+        System.out.println("   TURN BASED ADVENTURE    ");
+        System.out.println("===========================");
 
-        player.gainExperience(100);
+        System.out.print("\nEnter your character name: ");
+        String name = scanner.nextLine().trim();
 
-        System.out.println("\nAfter leveling:");
-        System.out.println("Level: " + player.getLevel());
-        System.out.println("Health: " + player.getHealth());
-        System.out.println("Max Health: " + player.getMaxHealth());
-        System.out.println("Attribute Points: " + player.getAttributePoints());
+        while (name.isEmpty()) {
+            System.out.print("Name cannot be empty. Try again: ");
+            name = scanner.nextLine().trim();
+        }
+
+        System.out.println("\nChoose your character class:");
+        System.out.println("1. Warrior");
+        System.out.println("2. Mage");
+        System.out.println("3. Archer");
+
+        int choice = 0;
+
+        while (choice < 1 || choice > 3) {
+            System.out.print("Enter your choice (1-3): ");
+
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+            } else {
+                System.out.println("Please enter a number.");
+                scanner.next();
+            }
+
+            if (choice < 1 || choice > 3) {
+                System.out.println("Invalid class selection.");
+            }
+        }
+
+        Character player;
+
+        switch (choice) {
+            case 1:
+                player = new Warrior(name);
+                break;
+
+            case 2:
+                player = new Mage(name);
+                break;
+
+            case 3:
+                player = new Archer(name);
+                break;
+
+            default:
+                throw new IllegalStateException("Invalid class");
+        }
+
+        scanner.nextLine();
+
+        System.out.println("\nCharacter created successfully!");
+
+        player.displayStats();
+
+        Game game = new Game(player, scanner);
+        game.start();
+
+        scanner.close();
     }
 }
