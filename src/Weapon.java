@@ -1,14 +1,17 @@
-
 public class Weapon extends Item {
 
-    private Rarity rarity;
-    private int damageBonus;
+    private final WeaponType type;
+    private final Rarity rarity;
 
-    public Weapon(String name, String description, Rarity rarity) {
+    public Weapon(String name, String description,
+                  WeaponType type, Rarity rarity) {
         super(name, description);
-
+        this.type = type;
         this.rarity = rarity;
-        this.damageBonus = rarity.getBonus();
+    }
+
+    public WeaponType getType() {
+        return type;
     }
 
     public Rarity getRarity() {
@@ -16,14 +19,14 @@ public class Weapon extends Item {
     }
 
     public int getDamageBonus() {
-        return damageBonus;
+        return rarity.getBonus();
     }
 
     @Override
     public void displayInfo() {
         super.displayInfo();
-
+        System.out.println("Type: " + type);
         System.out.println("Rarity: " + rarity);
-        System.out.println("Damage Bonus: +" + damageBonus);
+        System.out.println("Damage Bonus: +" + getDamageBonus());
     }
 }

@@ -5,6 +5,7 @@ public abstract class Character {
     private String name;
     private int level;
     private int experience;
+    private Inventory inventory;
 
     // Health
     private int health;
@@ -32,11 +33,16 @@ public abstract class Character {
         this.agility = agility;
 
         this.attributePoints = 0;
+        this.inventory = new Inventory();
     }
 
     // Getters
     public String getName() {
         return name;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 
     public int getLevel() {
