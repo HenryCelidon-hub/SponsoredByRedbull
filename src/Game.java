@@ -87,7 +87,7 @@ private void giveStartingItems() {
                     break;
 
                 case "3":
-                    System.out.println("Exploration coming soon!");
+                    explore();
                     break;
 
                 case "4":
@@ -96,7 +96,7 @@ private void giveStartingItems() {
 
                 case "5":
                     running = false;
-                    System.out.println("Thanks for playing!");
+                    System.out.println("Exiting game. Goodbye!");
                     break;
 
                 default:
@@ -218,5 +218,26 @@ private int readItemNumber() {
         return -1;
     }
 }
+
+
+private void explore() {
+
+    if (player.getHealth() <= 0) {
+        System.out.println("You cannot explore while defeated.");
+        return;
+    }
+
+    Enemy enemy = new Enemy(
+        "Goblin",
+        60,
+        12,
+        2,
+        50
+    );
+
+    Combat combat = new Combat(player, enemy, scanner);
+    combat.start();
+}
+
 
 }
