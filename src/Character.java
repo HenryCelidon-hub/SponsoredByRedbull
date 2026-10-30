@@ -117,6 +117,13 @@ public abstract class Character {
         System.out.println(name + " reached level " + level + "!");
         System.out.println("You earned 2 attribute points!");
         System.out.println("Current attribute points: " + attributePoints);
+
+        onLevelUp();
+    }
+
+    // Method to be overridden by subclasses for additional level-up behavior
+    protected void onLevelUp() {
+        // Default implementation does nothing
     }
 
 

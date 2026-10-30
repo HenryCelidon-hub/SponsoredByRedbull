@@ -38,4 +38,12 @@ public class Mage extends Character {
             mana = Math.min(maxMana, mana + amount);
         }
     }
+
+    @Override
+    protected void onLevelUp() {
+        super.onLevelUp();
+        // Increase max mana by 15 on level up
+        maxMana += 15;
+        mana += 15; // Restore mana to full on level up
+    }
 }
