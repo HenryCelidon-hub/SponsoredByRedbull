@@ -69,5 +69,24 @@ public class Main {
         game.start();
 
         scanner.close();
+
+        Weapon sword = new Weapon(
+            "Sword",
+            "A standard steel sword.",
+            Rarity.RARE
+        );
+
+        Weapon bow = new Weapon(
+            "Bow",
+            "A wooden bow.",
+            Rarity.COMMON
+        );
+
+        sword.displayInfo();
+
+        System.out.println();
+
+        bow.displayInfo();
+
     }
 }
