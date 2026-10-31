@@ -1,7 +1,16 @@
 import java.util.Random;
 import java.util.Scanner;
 
+
+
 public class Combat {
+
+    private static final int ATTACK_COST = 10;
+    private static final int WARRIOR_SPECIAL_COST = 25;
+    private static final int MAGE_SPECIAL_COST = 20;
+    private static final int ARCHER_SPECIAL_COST = 25;
+    private static final int FLEE_COST = 20;
+    private static final int REST_RECOVERY = 25;
 
     private Character player;
     private Enemy enemy;
@@ -18,29 +27,52 @@ public class Combat {
     public void start() {
 
         System.out.println("\nA wild " + enemy.getName() + " appears!");
+        player.resetStamina();
 
         while (player.getHealth() > 0 && enemy.isAlive()) {
 
             System.out.println("\n===== COMBAT =====");
             System.out.println(player.getName() + ": "
                     + player.getHealth() + "/" + player.getMaxHealth() + " HP");
+
+            System.out.println("Stamina: " + player.getStamina() + "/" + player.getMaxStamina() + " SP");
+            if (player instanceof Mage) {
+                Mage mage = (Mage) player;
+                System.out.println("Mana: " + mage.getMana() + "/" + mage.getMaxMana() + " MP");
+            }
             System.out.println(enemy.getName() + ": "
                     + enemy.getHealth() + "/" + enemy.getMaxHealth() + " HP");
 
-            System.out.println("1. Attack");
-            System.out.println("2. Use Speacial Ability");
+            System.out.println("\n1. Attack (10 SP)");
+            System.out.println("2. Use Special Ability (" + getSpecialStaminaCost() + " SP)");
             System.out.println("3. Use Potion");
-            System.out.println("4. Flee");
+            System.out.println("4. Flee (20 SP)");
+            System.out.println("5. Rest (Recover 25 SP)");
             System.out.print("Choice: ");
 
             String choice = scanner.nextLine().trim();
 
             switch (choice) {
                 case "1":
+                    if (!spendStamina(ATTACK_COST)) {
+                        continue;
+                    }
                     playerAttack();
                     break;
 
                 case "2":
+                    if(player instanceof Mage) {
+                        Mage mage = (Mage) player;
+                        if (mage.getMana() < 20) {
+                            System.out.println("Not enough mana!");
+                            continue;
+                        }
+                    }
+
+                    if(!spendStamina(getSpecialStaminaCost())) {
+                        continue;
+                    }
+
                     if(!specialAttack()) {
                         continue;
                     }
@@ -67,6 +99,10 @@ public class Combat {
                     break;
 
                 case "4":
+                    if (!spendStamina(FLEE_COST)) {
+                        continue;
+                    }
+
                     if (random.nextInt(100) < 50) {
                         System.out.println("You escaped successfully!");
                         return;
@@ -75,6 +111,11 @@ public class Combat {
                     System.out.println("Failed to escape!");
                     break;
 
+
+                case "5":
+                    player.restoreStamina(REST_RECOVERY);
+                    System.out.println("You rested and recovered " + REST_RECOVERY + " stamina.");
+                    break;
                 default:
                     System.out.println("Invalid option.");
                     continue;
@@ -82,6 +123,10 @@ public class Combat {
 
             if (enemy.isAlive()) {
                 enemyAttack();
+            }
+
+            if(player.getHealth() > 0 && enemy.isAlive()) {
+                player.restoreStamina(player.getStaminaRegen());
             }
         }
 
@@ -185,5 +230,34 @@ private boolean specialAttack() {
 
     return true;
 }
+
+
+private int getSpecialStaminaCost() {
+
+    if (player instanceof Warrior) {
+        return WARRIOR_SPECIAL_COST;
+    }
+
+    if (player instanceof Mage) {
+        return MAGE_SPECIAL_COST;
+    }
+
+    if (player instanceof Archer) {
+        return ARCHER_SPECIAL_COST;
+    }
+
+    return 0;
+}
+
+private boolean spendStamina(int cost) {
+
+    if (!player.useStamina(cost)) {
+        System.out.println("Not enough stamina!");
+        return false;
+    }
+
+    return true;
+}
+
 
 }

@@ -11,6 +11,9 @@ public abstract class Character {
     private int health;
     private int maxHealth;
 
+    private int stamina;
+    private int maxStamina;
+
     // Combat attributes
     private int strength;
     private int agility;
@@ -34,9 +37,21 @@ public abstract class Character {
 
         this.attributePoints = 0;
         this.inventory = new Inventory();
+
+        this.maxStamina = 50 + (agility * 2);
+        this.stamina = maxStamina;
     }
 
     // Getters
+
+    public int getStamina() {
+        return stamina;
+    }
+
+    public int getMaxStamina() {
+        return maxStamina;
+    }
+
     public String getName() {
         return name;
     }
@@ -94,11 +109,17 @@ public abstract class Character {
         agility += points;
         attributePoints -= points;
 
+        int newMaxStamina = 50 + (agility * 2);
+        int staminaIncrease = newMaxStamina - maxStamina;
+
+        maxStamina = newMaxStamina;
+        stamina += staminaIncrease;
+
         return true;
     }
 
         // method to keep track of experince and implment leveing up.
-        public void gainExperience(int xp) {
+    public void gainExperience(int xp) {
         if (xp <= 0) {
             return;
         }
@@ -168,9 +189,39 @@ public abstract class Character {
         System.out.println("Level: " + level);
         System.out.println("Experience: " + experience + "/" + (level * 100));
         System.out.println("Health: " + health + "/" + maxHealth);
+        System.out.println("Stamina: " + stamina + "/" + maxStamina);
+        System.out.println("Stamina Regen: " + getStaminaRegen() + " per turn");
         System.out.println("Strength: " + strength);
         System.out.println("Agility: " + agility);
         System.out.println("Attribute Points: " + attributePoints);
+    }
+    
+    // Method to calculate stamina regeneration based on agility
+    public int getStaminaRegen() {
+        return 5 + (agility / 3);
+    }
+
+
+    // Method to use stamina and update stamina
+    public boolean useStamina(int amount) {
+        if (amount <= 0 || amount > stamina) {
+            return false;
+        }
+
+        stamina -= amount;
+        return true;
+    }
+
+
+    // Method to restore stamina and update stamina
+    public void restoreStamina(int amount) {
+        if (amount > 0) {
+            stamina = Math.min(maxStamina, stamina + amount);
+        }
+    }
+
+    public void resetStamina(){
+        stamina = maxStamina;
     }
 
     // Abstract method for special ability, to be implemented by subclasses
