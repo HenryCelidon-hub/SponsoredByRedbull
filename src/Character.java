@@ -172,6 +172,9 @@ public abstract class Character {
         System.out.println("Agility: " + agility);
         System.out.println("Attribute Points: " + attributePoints);
     }
+
+    // Abstract method for special ability, to be implemented by subclasses
+    public abstract int useSpecialAbility();
 }
 
 

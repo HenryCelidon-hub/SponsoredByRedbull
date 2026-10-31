@@ -9,4 +9,19 @@ public class Archer extends Character {
     protected int getHealthIncrease() {
         return 15;
     }
+
+    @Override
+    public int useSpecialAbility() {
+
+        int damage = (int) Math.round(
+            getStrength() * 0.8 + getAgility() * 1.8
+        );
+
+        if (Math.random() < 0.35) {
+            System.out.println("Critical hit!");
+            damage *= 2;
+        }
+
+        return damage;
+    }
 }

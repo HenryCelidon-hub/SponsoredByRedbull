@@ -28,8 +28,9 @@ public class Combat {
                     + enemy.getHealth() + "/" + enemy.getMaxHealth() + " HP");
 
             System.out.println("1. Attack");
-            System.out.println("2. Use Potion");
-            System.out.println("3. Flee");
+            System.out.println("2. Use Speacial Ability");
+            System.out.println("3. Use Potion");
+            System.out.println("4. Flee");
             System.out.print("Choice: ");
 
             String choice = scanner.nextLine().trim();
@@ -40,6 +41,12 @@ public class Combat {
                     break;
 
                 case "2":
+                    if(!specialAttack()) {
+                        continue;
+                    }
+                    break;
+
+                case "3":
                     player.getInventory().displayInventory();
                     System.out.print("Potion number: ");
 
@@ -59,7 +66,7 @@ public class Combat {
                     }
                     break;
 
-                case "3":
+                case "4":
                     if (random.nextInt(100) < 50) {
                         System.out.println("You escaped successfully!");
                         return;
@@ -136,4 +143,47 @@ public class Combat {
         System.out.println(enemy.getName() + " dealt "
                 + damage + " damage!");
     }
+
+
+private boolean specialAttack() {
+
+    String abilityName;
+
+    if (player instanceof Warrior) {
+        abilityName = "Power Strike";
+    } else if (player instanceof Mage) {
+        abilityName = "Fireball";
+    } else if (player instanceof Archer) {
+        abilityName = "Precision Shot";
+    } else {
+        return false;
+    }
+
+    int baseDamage = player.useSpecialAbility();
+
+    if (baseDamage < 0) {
+        System.out.println("Not enough mana!");
+        return false;
+    }
+
+    int weaponBonus = player.getInventory().getDamageBonus();
+
+    double multiplier = 0.8 + random.nextDouble() * 0.4;
+
+    int damage = (int) Math.round(
+        (baseDamage + weaponBonus) * multiplier
+    );
+
+    damage = Math.max(1, damage - enemy.getDefense());
+
+    enemy.takeDamage(damage);
+
+    System.out.println(player.getName() + " used "
+            + abilityName + "!");
+
+    System.out.println("Dealt " + damage + " damage!");
+
+    return true;
+}
+
 }

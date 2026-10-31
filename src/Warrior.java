@@ -8,4 +8,11 @@ public class Warrior extends Character {
     protected int getHealthIncrease() {
         return 20;
     }
+
+    @Override
+    public int useSpecialAbility() {
+        return (int) Math.round(
+        getStrength() * 2.5 + getAgility() * 0.5
+        );
+    }
 }

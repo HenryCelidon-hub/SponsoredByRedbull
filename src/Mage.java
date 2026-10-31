@@ -52,4 +52,16 @@ public class Mage extends Character {
         super.displayStats();
         System.out.println("Mana: " + mana + "/" + maxMana);
     }
+
+    @Override
+    public int useSpecialAbility() {
+
+        if (!useMana(20)) {
+            return -1;
+        }
+
+        return (int) Math.round(
+            getStrength() * 1.5 + getAgility() * 2.0 + 20
+        );
+    }
 }
