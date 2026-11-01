@@ -10,6 +10,7 @@ public class Main {
         System.out.println("   TURN BASED ADVENTURE    ");
         System.out.println("===========================");
 
+        // Character creation
         System.out.print("\nEnter your character name: ");
         String name = scanner.nextLine().trim();
 
@@ -28,15 +29,15 @@ public class Main {
         while (choice < 1 || choice > 3) {
             System.out.print("Enter your choice (1-3): ");
 
-            if (scanner.hasNextInt()) {
-                choice = scanner.nextInt();
-            } else {
-                System.out.println("Please enter a number.");
-                scanner.next();
-            }
+            try {
+                choice = Integer.parseInt(scanner.nextLine().trim());
 
-            if (choice < 1 || choice > 3) {
-                System.out.println("Invalid class selection.");
+                if (choice < 1 || choice > 3) {
+                    System.out.println("Invalid class selection.");
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid number.");
             }
         }
 
@@ -59,15 +60,14 @@ public class Main {
                 throw new IllegalStateException("Invalid class");
         }
 
-        scanner.nextLine();
-
         System.out.println("\nCharacter created successfully!");
-
         player.displayStats();
 
+        // Launch the game
         Game game = new Game(player, scanner);
         game.start();
 
         scanner.close();
     }
 }
+
