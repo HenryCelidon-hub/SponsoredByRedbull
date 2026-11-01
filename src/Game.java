@@ -4,10 +4,12 @@ public class Game {
 
     private Character player;
     private Scanner scanner;
+    private Exploration exploration;
 
     public Game(Character player, Scanner scanner) {
         this.player = player;
         this.scanner = scanner;
+        this.exploration = new Exploration(player, scanner);
     }
 
 
@@ -220,6 +222,7 @@ private int readItemNumber() {
 }
 
 
+
 private void explore() {
 
     if (player.getHealth() <= 0) {
@@ -227,17 +230,39 @@ private void explore() {
         return;
     }
 
-    Enemy enemy = new Enemy(
-        "Goblin",
-        60,
-        12,
-        2,
-        50
-    );
+    while (true) {
 
-    Combat combat = new Combat(player, enemy, scanner);
-    combat.start();
+        System.out.println("\n===== EXPLORATION =====");
+        System.out.println("1. Forest");
+        System.out.println("2. Desert");
+        System.out.println("3. Coast");
+        System.out.println("4. Return to Main Menu");
+        System.out.print("Choose a biome: ");
+
+        String choice = scanner.nextLine().trim();
+
+        switch (choice) {
+            case "1":
+                exploration.explore(Biome.FOREST);
+                return;
+
+            case "2":
+                exploration.explore(Biome.DESERT);
+                return;
+
+            case "3":
+                exploration.explore(Biome.COAST);
+                return;
+
+            case "4":
+                return;
+
+            default:
+                System.out.println("Invalid choice. Try again.");
+        }
+    }
 }
+
 
 
 }

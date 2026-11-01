@@ -24,9 +24,9 @@ public class Combat {
         this.random = new Random();
     }
 
-    public void start() {
+    public CombatResult start() {
 
-        System.out.println("\nA wild " + enemy.getName() + " appears!");
+        System.out.println("\nA Level " + enemy.getLevel() + " " + enemy.getName() + " appears!");
         player.resetStamina();
 
         while (player.getHealth() > 0 && enemy.isAlive()) {
@@ -105,7 +105,7 @@ public class Combat {
 
                     if (random.nextInt(100) < 50) {
                         System.out.println("You escaped successfully!");
-                        return;
+                        return CombatResult.FLED;
                     }
 
                     System.out.println("Failed to escape!");
@@ -131,14 +131,15 @@ public class Combat {
         }
 
         if (!enemy.isAlive()) {
-            System.out.println("\nYou defeated " + enemy.getName() + "!");
+            System.out.println("\nYou defeated the level " + enemy.getLevel() + " " + enemy.getName() + "!");
             System.out.println("Gained " + enemy.getExperienceReward() + " XP.");
             player.gainExperience(enemy.getExperienceReward());
+            return CombatResult.VICTORY;
         }
 
-        if (player.getHealth() <= 0) {
-            System.out.println("\nYou have been defeated!");
-        }
+        System.out.println("\nYou have been defeated!");
+        return CombatResult.DEFEAT;
+        
     }
 
     private void playerAttack() {
